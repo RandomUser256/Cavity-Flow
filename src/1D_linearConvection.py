@@ -5,7 +5,7 @@ import time, sys                   #and load some utilities
 def linearconv(nx):
     dx = 2 / (nx - 1)  #  distance between any pair of adjacent grid points
     nt = 20    #nt is the number of timesteps we want to calculate
-    c = 1  #assume wavespeed of c = 1
+    c = 1  #wavespeed 
     sigma = .5
     
     #As more grid points are added, the distance between them (dx) gets smaller.
