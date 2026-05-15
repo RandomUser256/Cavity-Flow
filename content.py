@@ -271,16 +271,11 @@ INFO_1D_NONLINEAR_CONVECTION = [
 
 INFO_BURGERS_1D = [
     paragraph(
-        "Burgers' equation combines nonlinear convection with viscous diffusion. "
-        "It is the simplest PDE that captures both effects and admits an exact solution "
-        "via the Cole-Hopf transformation."
-    ),
-    latex(
-        r"\frac{\partial u}{\partial t} + u \frac{\partial u}{\partial x} "
-        r"= \nu \frac{\partial^2 u}{\partial x^2}"
+        "Modelo de movimiento turbulento de fluidos propuesto por J.M Burgers, siendo publicados todos sus artículos respecto al modelo en 1948 (Beck, 1948). "
+        "La ecuación de Burgers combina la convección no lineal con la difusión viscosa."
     ),
     collapsible(
-        "Exact Solution",
+        "Solución exacta",
         paragraph(
             "The Cole-Hopf transformation linearizes Burgers' equation. "
             "The analytical solution is computed with SymPy and shown alongside the numerical result."
@@ -288,23 +283,35 @@ INFO_BURGERS_1D = [
         latex(r"u(x,t) = -2\nu \frac{\partial}{\partial x} \ln \phi(x,t)"),
     ),
     collapsible(
-        "Physical Interpretation",
-        paragraph("Two competing effects determine the solution shape:"),
+        "Interpretación física",
         bullets(
-            "Convection — steepens the profile toward shock formation",
-            "Diffusion — smooths out gradients and dissipates kinetic energy",
-            "Higher ν → more diffusion, smoother solution",
-            "Lower ν → sharp shock-like features persist",
+            "La convección de la curva representa dispersión de la energía cinética del fluido.",
+            "Una mayor difusión suaviza la dispersión de la energía.",
+            "Mayor viscosidad -> una difusión más suave. Menor viscosidad -> cambios bruscos en la ecuación.",
         ),
     ),
     collapsible(
-        "Parameters",
+        "Parámetros",
         bullets(
-            "nx — spatial resolution",
-            "nt — time steps to advance",
-            "ν — kinematic viscosity; controls the diffusion strength",
+            "nx, ny - Cantidad de puntos a representar en los ejes (x,y) respectivamente",
+            "nt - Cantidad de unidades de tiempo consideradas en el desplazamiento de la ecuación",
+            "ν (viscosidad cinemática) - Esta controla la fuerza de dispersión de la ecuación",
         ),
     ),
+    collapsible(
+        "Usos/aplicaciones de la ecuación",
+        bullets(
+            "Simplificación de la ecuación Navier-Stokes.",
+            "Modelo de referencia para analizar otras Ecuaciones Diferenciales Parciales.",
+            "Caracterización de otras leyes de conservación escalares viscosas.",
+        )
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+             "Beck, M. (s.f.). Burgers Equation. Herit-Watt University. https://math.bu.edu/people/mabeck/Beck2012_burgers.pdf"
+        )
+    )
 ]
 
 INFO_2D_LAPLACE = [
@@ -478,7 +485,7 @@ INFO_2D_NONLINEAR_CONVECTION = [
 
 INFO_BURGERS_2D = [
     paragraph(
-        "The 2D Burgers equation adds viscous diffusion to 2D nonlinear convection. "
+        "La ecuación de Burger 2D incorpora la difusión viscosa a la convección no lineal en 2D."
         "Both velocity components are evolved simultaneously under the same PDE structure."
     ),
     latex(
@@ -489,56 +496,62 @@ INFO_BURGERS_2D = [
         r"\frac{\partial v}{\partial t} + u\frac{\partial v}{\partial x} + v\frac{\partial v}{\partial y} "
         r"= \nu\left(\frac{\partial^2 v}{\partial x^2} + \frac{\partial^2 v}{\partial y^2}\right)"
     ),
+    paragraph(
+        "La ecuación anterior se discretiza para ser aproximada. Su forma resultante es la siguiente: "
+    ),
+    latex(
+        r"\begin{split}& \frac{u_{i,j}^{n+1} - u_{i,j}^n}{\Delta t} + u_{i,j}^n \frac{u_{i,j}^n-u_{i-1,j}^n}{\Delta x} + v_{i,j}^n \frac{u_{i,j}^n - u_{i,j-1}^n}{\Delta y} = \\& \qquad \nu \left( \frac{u_{i+1,j}^n - 2u_{i,j}^n+u_{i-1,j}^n}{\Delta x^2} + \frac{u_{i,j+1}^n - 2u_{i,j}^n + u_{i,j-1}^n}{\Delta y^2} \right)\end{split}"
+    ),
+    latex(
+        r"\begin{split} v_{i,j}^{n+1} = & v_{i,j}^n - \frac{\Delta t}{\Delta x} u_{i,j}^n (v_{i,j}^n - v_{i-1,j}^n) - \frac{\Delta t}{\Delta y} v_{i,j}^n (v_{i,j}^n - v_{i,j-1}^n) \\& + \frac{\nu \Delta t}{\Delta x^2}(v_{i+1,j}^n-2v_{i,j}^n+v_{i-1,j}^n) + \frac{\nu \Delta t}{\Delta y^2} (v_{i,j+1}^n - 2v_{i,j}^n + v_{i,j-1}^n)\end{split}"
+    ),
     collapsible(
-        "Physical Behavior",
+        "Interpretación física",
         paragraph("Two competing effects shape the solution:"),
         bullets(
-            "Nonlinear convection — steepens gradients toward shock formation",
-            "Diffusion — smooths gradients and dissipates energy",
-            "Lower ν → sharper features; higher ν → smoother, more spread-out solution",
+            "La convección de la curva representa dispersión de la energía cinética del fluido.",
+            "Una mayor difusión suaviza la dispersión de la energía.",
+            "Mayor viscosidad -> una difusión más suave. Menor viscosidad -> cambios bruscos en la ecuación.",
         ),
     ),
     collapsible(
-        "Parameters",
+        "Parámetros",
         bullets(
-            "nx, ny — grid dimensions",
-            "nt — time steps",
-            "ν — kinematic viscosity",
-            "σ — stability parameter (use very small values for this equation)",
+            "nx, ny - Cantidad de puntos a representar en los ejes (x,y) respectivamente",
+            "nt - Cantidad de unidades de tiempo consideradas en el desplazamiento de la ecuación",
+            "ν (viscosidad cinemática) - Esta controla la fuerza de dispersión de la ecuación",
+            "σ — parámetro de estabilidad (recomendado usar valores pequeños)",
         ),
     ),
 ]
 
 INFO_CAVITY_FLOW = [
     paragraph(
-        "The lid-driven cavity is a classic CFD benchmark. A square cavity has its top wall "
-        "moving at unit velocity while all other walls are stationary. "
-        "The full incompressible Navier-Stokes equations are solved."
+        "El problema “Lid-Driven Cavity” plantea un contenedor cuadrado, delimitado a dos dimensiones y con su tapa o pared superior sometido a movimiento"
+        " Ha sido ampliamente estudiado en el ámbito de mecánica de fluidos y se han propuesto numerosas soluciones diversas, entre las cuales están las ecuaciones Navier-Stokes."
     ),
     collapsible(
-        "Governing Equations",
-        paragraph("x-momentum:"),
+        "Ecuaciones fundamentales",
+        paragraph("Momento u (eje x):"),
         latex(
             r"\frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} + v\frac{\partial u}{\partial y} "
             r"= -\frac{1}{\rho}\frac{\partial p}{\partial x} "
             r"+ \nu\left(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}\right)"
         ),
-        paragraph("y-momentum:"),
+        paragraph("Momento v (eje y):"),
         latex(
             r"\frac{\partial v}{\partial t} + u\frac{\partial v}{\partial x} + v\frac{\partial v}{\partial y} "
             r"= -\frac{1}{\rho}\frac{\partial p}{\partial y} "
             r"+ \nu\left(\frac{\partial^2 v}{\partial x^2} + \frac{\partial^2 v}{\partial y^2}\right)"
         ),
-        paragraph("Pressure Poisson equation (derived from incompressibility):"),
+        paragraph("Ecuación de presión Poisson (derivado de la ecuación de incompresibilidad):"),
         latex(
-            r"\nabla^2 p = \rho\left[\frac{1}{\Delta t}\nabla\cdot\mathbf{u}^* "
-            r"- \left(\frac{\partial u}{\partial x}\right)^2 "
-            r"- 2\frac{\partial u}{\partial y}\frac{\partial v}{\partial x} "
-            r"- \left(\frac{\partial v}{\partial y}\right)^2\right]"
+            r"\frac{\partial^2 p}{\partial x^2}+\frac{\partial^2 p}{\partial y^2} = -\rho\left(\frac{\partial u}{\partial x}\frac{\partial u}{\partial x}+2\frac{\partial u}{\partial y}\frac{\partial v}{\partial x}+\frac{\partial v}{\partial y}\frac{\partial v}{\partial y} \right)"
+
         ),
     ),
     collapsible(
-        "Reynolds Number",
+        "Número de Reynolds",
         paragraph("The Reynolds number characterizes the flow regime:"),
         latex(r"\text{Re} = \frac{U L}{\nu}"),
         paragraph(
@@ -548,22 +561,22 @@ INFO_CAVITY_FLOW = [
         ),
     ),
     collapsible(
-        "Output",
+        "Interpretación resultados",
         bullets(
-            "Pressure field — filled contours showing the pressure distribution",
-            "Velocity vectors — quiver arrows indicating flow direction and magnitude",
-            "Streamfunction — contour lines tracing fluid path lines",
+            "Zonas de presión: Los colores representan una escala para la presión del fluido en una región dada.",
+            "Vectores de velocidad: Las líneas punteadas representan la dirección y magnitud del movimiento del fluido.",
+            "Corriente: Las líneas curvas muestran la forma que adopta el movimiento del fluido, siendo esto en forma de olas.",
         ),
     ),
     collapsible(
-        "Parameters",
+        "Parámetros",
         bullets(
-            "nx, ny — grid resolution (higher = smoother result, slower runtime)",
-            "nt — number of time steps to simulate",
-            "nit — pressure Poisson iterations per time step (more = better pressure accuracy)",
-            "ρ — fluid density",
-            "ν — kinematic viscosity (controls Re = 2/ν)",
-            "dt — time step size",
+            "nx, ny — Coordenadas de espacio (x,y) para la caja delimitadora. El aumentar el tamaño suaviza el comportamiento del fluido, pero vuelve más complicada la operación.",
+            "nt — Número de intervalos de tiempo a considerar en el cálculo",
+            "nit — Cantidad de iteración a realizar para el cálculo de las zonas de presión. Entre mayores iteraciones, más preciso es el resultado",
+            "ρ — Densidad del fluido",
+            "ν — Viscosidad cinética",
+            "dt — Tamaño de intervalos de tiempo que se consideran para ‘nt’",
         ),
     ),
 ]
