@@ -1,18 +1,12 @@
 import dash
-from dash import dcc, html, Input, Output, State, ALL
+from dash import dcc, html, Input, Output, State, ALL, ctx
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 
 import simulations
+import content
 
 # ─── Equation registry ─────────────────────────────────────────────────────────
-#
-# Each entry:
-#   label  – display name shown in the dropdown
-#   group  – used to group options visually
-#   run    – callable that returns a plotly Figure
-#   params – list of parameter descriptors (id, label, default, min, max, step)
-#   info   – placeholder text; user will fill this in later
 
 EQUATIONS = {
     "1d_diffusion": {
@@ -25,7 +19,7 @@ EQUATIONS = {
             {"id": "nu",    "label": "Diffusion Coeff. (ν)", "default": 0.3,  "min": 0.01,  "max": 2.0,  "step": 0.01},
             {"id": "sigma", "label": "CFL Number (σ)",        "default": 0.2,  "min": 0.01,  "max": 0.49, "step": 0.01},
         ],
-        "info": "Information about the 1D Diffusion Equation will be added here.",
+        "info": content.INFO_1D_DIFFUSION,
     },
     "1d_linear_convection": {
         "label": "1D Linear Convection",
@@ -37,7 +31,7 @@ EQUATIONS = {
             {"id": "c",     "label": "Wave Speed (c)",     "default": 1.0, "min": 0.1,  "max": 5.0,  "step": 0.1},
             {"id": "sigma", "label": "CFL Number (σ)",     "default": 0.5, "min": 0.01, "max": 0.99, "step": 0.01},
         ],
-        "info": "Information about the 1D Linear Convection Equation will be added here.",
+        "info": content.INFO_1D_LINEAR_CONVECTION,
     },
     "1d_nonlinear_convection": {
         "label": "1D Nonlinear Convection",
@@ -48,7 +42,7 @@ EQUATIONS = {
             {"id": "nt", "label": "Time Steps (nt)",   "default": 20,    "min": 1,     "max": 500, "step": 1},
             {"id": "dt", "label": "Time Step (dt)",    "default": 0.025, "min": 0.001, "max": 0.1, "step": 0.001},
         ],
-        "info": "Information about the 1D Nonlinear Convection Equation will be added here.",
+        "info": content.INFO_1D_NONLINEAR_CONVECTION,
     },
     "burgers_1d": {
         "label": "1D Burgers Equation",
@@ -59,18 +53,18 @@ EQUATIONS = {
             {"id": "nt", "label": "Time Steps (nt)",   "default": 100,  "min": 1,    "max": 500, "step": 1},
             {"id": "nu", "label": "Viscosity (ν)",     "default": 0.07, "min": 0.01, "max": 1.0, "step": 0.01},
         ],
-        "info": "Information about the 1D Burgers Equation will be added here.",
+        "info": content.INFO_BURGERS_1D,
     },
     "2d_laplace": {
         "label": "2D Laplace Equation",
         "group": "2D Equations",
         "run": simulations.run_2d_laplace,
         "params": [
-            {"id": "nx",           "label": "Grid Points X (nx)",    "default": 31,   "min": 10,    "max": 80,   "step": 1},
-            {"id": "ny",           "label": "Grid Points Y (ny)",    "default": 31,   "min": 10,    "max": 80,   "step": 1},
-            {"id": "l1norm_target","label": "Convergence Tolerance", "default": 1e-4, "min": 1e-6,  "max": 1e-2, "step": 1e-5},
+            {"id": "nx",            "label": "Grid Points X (nx)",    "default": 31,   "min": 10,   "max": 80,   "step": 1},
+            {"id": "ny",            "label": "Grid Points Y (ny)",    "default": 31,   "min": 10,   "max": 80,   "step": 1},
+            {"id": "l1norm_target", "label": "Convergence Tolerance", "default": 1e-4, "min": 1e-6, "max": 1e-2, "step": 1e-5},
         ],
-        "info": "Information about the 2D Laplace Equation will be added here.",
+        "info": content.INFO_2D_LAPLACE,
     },
     "2d_poisson": {
         "label": "2D Poisson Equation",
@@ -81,20 +75,20 @@ EQUATIONS = {
             {"id": "ny", "label": "Grid Points Y (ny)", "default": 50,  "min": 10, "max": 100, "step": 1},
             {"id": "nt", "label": "Iterations (nt)",    "default": 100, "min": 10, "max": 500, "step": 10},
         ],
-        "info": "Information about the 2D Poisson Equation will be added here.",
+        "info": content.INFO_2D_POISSON,
     },
     "2d_diffusion": {
         "label": "2D Diffusion Equation",
         "group": "2D Equations",
         "run": simulations.run_2d_diffusion,
         "params": [
-            {"id": "nx",    "label": "Grid Points X (nx)",     "default": 31,   "min": 10,    "max": 80,   "step": 1},
-            {"id": "ny",    "label": "Grid Points Y (ny)",     "default": 31,   "min": 10,    "max": 80,   "step": 1},
-            {"id": "nt",    "label": "Time Steps (nt)",         "default": 50,   "min": 1,     "max": 200,  "step": 1},
-            {"id": "nu",    "label": "Diffusion Coeff. (ν)",   "default": 0.05, "min": 0.001, "max": 0.5,  "step": 0.001},
-            {"id": "sigma", "label": "CFL Number (σ)",          "default": 0.25, "min": 0.01,  "max": 0.49, "step": 0.01},
+            {"id": "nx",    "label": "Grid Points X (nx)",   "default": 31,   "min": 10,    "max": 80,   "step": 1},
+            {"id": "ny",    "label": "Grid Points Y (ny)",   "default": 31,   "min": 10,    "max": 80,   "step": 1},
+            {"id": "nt",    "label": "Time Steps (nt)",       "default": 50,   "min": 1,     "max": 200,  "step": 1},
+            {"id": "nu",    "label": "Diffusion Coeff. (ν)", "default": 0.05, "min": 0.001, "max": 0.5,  "step": 0.001},
+            {"id": "sigma", "label": "CFL Number (σ)",        "default": 0.25, "min": 0.01,  "max": 0.49, "step": 0.01},
         ],
-        "info": "Information about the 2D Diffusion Equation will be added here.",
+        "info": content.INFO_2D_DIFFUSION,
     },
     "2d_linear_convection": {
         "label": "2D Linear Convection",
@@ -107,7 +101,7 @@ EQUATIONS = {
             {"id": "c",     "label": "Wave Speed (c)",      "default": 1.0, "min": 0.1,  "max": 5.0,  "step": 0.1},
             {"id": "sigma", "label": "CFL Number (σ)",      "default": 0.2, "min": 0.01, "max": 0.49, "step": 0.01},
         ],
-        "info": "Information about the 2D Linear Convection Equation will be added here.",
+        "info": content.INFO_2D_LINEAR_CONVECTION,
     },
     "2d_nonlinear_convection": {
         "label": "2D Nonlinear Convection",
@@ -119,7 +113,7 @@ EQUATIONS = {
             {"id": "nt",    "label": "Time Steps (nt)",     "default": 80,  "min": 1,    "max": 300,  "step": 1},
             {"id": "sigma", "label": "CFL Number (σ)",      "default": 0.2, "min": 0.01, "max": 0.49, "step": 0.01},
         ],
-        "info": "Information about the 2D Nonlinear Convection Equation will be added here.",
+        "info": content.INFO_2D_NONLINEAR_CONVECTION,
     },
     "burgers_2d": {
         "label": "2D Burgers Equation",
@@ -132,22 +126,22 @@ EQUATIONS = {
             {"id": "nu",    "label": "Viscosity (ν)",       "default": 0.01,  "min": 0.001,  "max": 0.5,  "step": 0.001},
             {"id": "sigma", "label": "CFL Number (σ)",      "default": 0.0009,"min": 0.0001, "max": 0.01, "step": 0.0001},
         ],
-        "info": "Information about the 2D Burgers Equation will be added here.",
+        "info": content.INFO_BURGERS_2D,
     },
     "cavity_flow": {
         "label": "Cavity Flow (Navier-Stokes)",
         "group": "Navier-Stokes",
         "run": simulations.run_cavity_flow,
         "params": [
-            {"id": "nx",  "label": "Grid Points X (nx)",         "default": 41,    "min": 10,    "max": 61,    "step": 1},
-            {"id": "ny",  "label": "Grid Points Y (ny)",         "default": 41,    "min": 10,    "max": 61,    "step": 1},
-            {"id": "nt",  "label": "Time Steps (nt)",             "default": 500,   "min": 50,    "max": 1000,  "step": 50},
-            {"id": "nit", "label": "Pressure Iterations (nit)",  "default": 50,    "min": 10,    "max": 100,   "step": 5},
-            {"id": "rho", "label": "Density (ρ)",                "default": 1.0,   "min": 0.1,   "max": 10.0,  "step": 0.1},
-            {"id": "nu",  "label": "Kinematic Viscosity (ν)",    "default": 0.1,   "min": 0.01,  "max": 1.0,   "step": 0.01},
-            {"id": "dt",  "label": "Time Step (dt)",             "default": 0.001, "min": 0.0001,"max": 0.01,  "step": 0.0001},
+            {"id": "nx",  "label": "Grid Points X (nx)",        "default": 41,    "min": 10,    "max": 61,   "step": 1},
+            {"id": "ny",  "label": "Grid Points Y (ny)",        "default": 41,    "min": 10,    "max": 61,   "step": 1},
+            {"id": "nt",  "label": "Time Steps (nt)",            "default": 500,   "min": 50,    "max": 1000, "step": 50},
+            {"id": "nit", "label": "Pressure Iterations (nit)", "default": 50,    "min": 10,    "max": 100,  "step": 5},
+            {"id": "rho", "label": "Density (ρ)",               "default": 1.0,   "min": 0.1,   "max": 10.0, "step": 0.1},
+            {"id": "nu",  "label": "Kinematic Viscosity (ν)",   "default": 0.1,   "min": 0.01,  "max": 1.0,  "step": 0.01},
+            {"id": "dt",  "label": "Time Step (dt)",            "default": 0.001, "min": 0.0001,"max": 0.01, "step": 0.0001},
         ],
-        "info": "Information about the Cavity Flow Navier-Stokes simulation will be added here.",
+        "info": content.INFO_CAVITY_FLOW,
     },
     "channel_flow": {
         "label": "Channel Flow (Navier-Stokes)",
@@ -163,7 +157,7 @@ EQUATIONS = {
             {"id": "dt",        "label": "Time Step (dt)",            "default": 0.01, "min": 0.001, "max": 0.1,  "step": 0.001},
             {"id": "max_steps", "label": "Max Iterations",            "default": 500,  "min": 50,    "max": 2000, "step": 50},
         ],
-        "info": "Information about the Channel Flow Navier-Stokes simulation will be added here.",
+        "info": content.INFO_CHANNEL_FLOW,
     },
 }
 
@@ -201,57 +195,73 @@ _groups: dict = {}
 for key, cfg in EQUATIONS.items():
     _groups.setdefault(cfg["group"], []).append({"label": cfg["label"], "value": key})
 
-dropdown_options = [
-    {"label": html.Span(g, style={"fontWeight": "bold", "color": "#aaa"}), "value": f"__group_{g}__", "disabled": True}
-    for g in _groups
-    for _ in [None]  # type: ignore — just to interleave
-]
-# Rebuild as flat list with group headers
 flat_options = []
 for group, items in _groups.items():
     flat_options.append({"label": f"── {group} ──", "value": f"__group_{group}__", "disabled": True})
     flat_options.extend(items)
 
+
 # ─── Sidebar ───────────────────────────────────────────────────────────────────
+
+_VIEW_BTN_ACTIVE   = {"color": "info",      "outline": False}
+_VIEW_BTN_INACTIVE = {"color": "secondary", "outline": True}
 
 sidebar = html.Div(
     [
-        # Title
         html.Div(
             html.H4("CFD Explorer", className="mb-0 fw-bold",
                     style={"color": "#4fc3f7", "letterSpacing": "0.05em"}),
-            className="mb-4",
+            className="mb-3",
         ),
 
-        # Equation selector
-        html.Label("Equation", className="text-secondary small fw-bold text-uppercase mb-1"),
-        dcc.Dropdown(
-            id="equation-selector",
-            options=flat_options,
-            value="1d_diffusion",
-            clearable=False,
-            style={"color": "#222"},
+        # View toggle
+        dbc.ButtonGroup(
+            [
+                dbc.Button("Overview", id="btn-home", size="sm",
+                           color=_VIEW_BTN_ACTIVE["color"],
+                           outline=_VIEW_BTN_ACTIVE["outline"]),
+                dbc.Button("Simulator", id="btn-sim", size="sm",
+                           color=_VIEW_BTN_INACTIVE["color"],
+                           outline=_VIEW_BTN_INACTIVE["outline"]),
+            ],
+            className="w-100 mb-3",
         ),
 
-        html.Hr(style={"borderColor": "#444", "margin": "1.2rem 0"}),
+        # Simulator controls (hidden on overview)
+        html.Div(
+            id="sim-controls",
+            style={"display": "none"},
+            children=[
+                html.Label("Equation",
+                           className="text-secondary small fw-bold text-uppercase mb-1"),
+                dcc.Dropdown(
+                    id="equation-selector",
+                    options=flat_options,
+                    value="1d_diffusion",
+                    clearable=False,
+                    style={"color": "#222"},
+                ),
 
-        # Parameters (populated by callback)
-        html.Label("Parameters", className="text-secondary small fw-bold text-uppercase mb-2"),
-        html.Div(id="params-container"),
+                html.Hr(style={"borderColor": "#444", "margin": "1.2rem 0"}),
 
-        html.Hr(style={"borderColor": "#444", "margin": "1.2rem 0"}),
+                html.Label("Parameters",
+                           className="text-secondary small fw-bold text-uppercase mb-2"),
+                html.Div(id="params-container"),
 
-        # Run button
-        dbc.Button(
-            [html.I(className="me-2"), "Run Simulation"],
-            id="run-btn",
-            color="primary",
-            className="w-100",
-            style={"fontWeight": "600"},
+                html.Hr(style={"borderColor": "#444", "margin": "1.2rem 0"}),
+
+                dbc.Button(
+                    [html.I(className="me-2"), "Run Simulation"],
+                    id="run-btn",
+                    color="primary",
+                    className="w-100",
+                    style={"fontWeight": "600"},
+                ),
+            ],
         ),
 
-        # Hidden store for parameter names of current equation
         dcc.Store(id="param-names-store"),
+        dcc.Store(id="view-store", data="home"),
     ],
     style={
         "position": "sticky",
@@ -264,18 +274,43 @@ sidebar = html.Div(
     },
 )
 
-# ─── Main content ──────────────────────────────────────────────────────────────
 
-main_content = html.Div(
+# ─── Home / overview page ──────────────────────────────────────────────────────
+
+_CONTENT_STYLE = {"background": "#16213e", "minHeight": "100vh", "padding": "2rem 2rem 3rem"}
+
+home_page = html.Div(
     [
-        # Page heading
+        html.Div(
+            [
+                html.H2("Numerical Methods in CFD", className="fw-bold mb-1",
+                        style={"color": "#e0e0e0"}),
+                html.P(
+                    "An interactive explorer for finite difference methods in "
+                    "computational fluid dynamics.",
+                    className="text-secondary mb-0",
+                    style={"fontSize": "0.95rem"},
+                ),
+            ],
+            className="mb-4",
+        ),
+        *content.render_blocks(content.HOME_CONTENT),
+    ],
+    id="home-page",
+    style=_CONTENT_STYLE,
+)
+
+
+# ─── Simulator page ────────────────────────────────────────────────────────────
+
+simulator_page = html.Div(
+    [
         html.Div(
             [
                 html.H2("CFD Equation Explorer", className="fw-bold mb-1",
                         style={"color": "#e0e0e0"}),
                 html.P(
-                    "Numerical methods for computational fluid dynamics — "
-                    "select an equation, adjust its parameters, and run the simulation.",
+                    "Select an equation, adjust its parameters, and run the simulation.",
                     className="text-secondary mb-0",
                     style={"fontSize": "0.95rem"},
                 ),
@@ -283,7 +318,6 @@ main_content = html.Div(
             className="mb-4",
         ),
 
-        # Simulation output (graph + loading spinner)
         dcc.Loading(
             id="loading-graph",
             type="circle",
@@ -295,30 +329,22 @@ main_content = html.Div(
             ),
         ),
 
-        # Status line
         html.Div(id="sim-status", className="text-secondary mt-2",
                  style={"fontSize": "0.82rem", "minHeight": "1.2rem"}),
 
         html.Hr(style={"borderColor": "#2d2d4a", "margin": "1.5rem 0"}),
 
-        # About / info section
         html.Label("About this Equation",
                    className="text-secondary small fw-bold text-uppercase mb-2"),
         dbc.Card(
-            dbc.CardBody(
-                html.P(id="info-text",
-                       className="mb-0",
-                       style={"color": "#aaa", "fontSize": "0.92rem", "whiteSpace": "pre-wrap"}),
-            ),
+            dbc.CardBody(html.Div(id="info-blocks")),
             style={"background": "#1a1a2e", "border": "1px solid #2d2d4a"},
         ),
     ],
-    style={
-        "background": "#16213e",
-        "minHeight": "100vh",
-        "padding": "2rem 2rem 3rem",
-    },
+    id="simulator-page",
+    style={"display": "none", **_CONTENT_STYLE},
 )
+
 
 # ─── Layout ────────────────────────────────────────────────────────────────────
 
@@ -326,7 +352,7 @@ app.layout = dbc.Container(
     dbc.Row(
         [
             dbc.Col(sidebar, width=3, className="p-0"),
-            dbc.Col(main_content, width=9),
+            dbc.Col([home_page, simulator_page], width=9),
         ],
         className="g-0",
     ),
@@ -338,52 +364,83 @@ app.layout = dbc.Container(
 # ─── Callbacks ─────────────────────────────────────────────────────────────────
 
 @app.callback(
-    Output("params-container", "children"),
-    Output("param-names-store", "data"),
-    Output("info-text", "children"),
-    Input("equation-selector", "value"),
+    Output("view-store", "data"),
+    Input("btn-home", "n_clicks"),
+    Input("btn-sim",  "n_clicks"),
+    prevent_initial_call=True,
 )
-def update_controls(equation):
-    """Rebuild the parameter inputs and info text whenever a new equation is selected."""
-    if not equation or equation.startswith("__group_"):
-        return [], [], ""
-
-    cfg = EQUATIONS.get(equation)
-    if cfg is None:
-        return [], [], ""
-
-    rows = []
-    names = []
-    for i, p in enumerate(cfg["params"]):
-        rows.append(
-            html.Div(
-                [
-                    html.Label(
-                        p["label"],
-                        className="text-secondary mb-1",
-                        style={"fontSize": "0.82rem"},
-                    ),
-                    dbc.Input(
-                        id={"type": "param-input", "index": i},
-                        type="number",
-                        value=p["default"],
-                        min=p["min"],
-                        max=p["max"],
-                        step=p["step"],
-                        debounce=True,
-                        className="mb-2",
-                        style={"fontSize": "0.88rem"},
-                    ),
-                ]
-            )
-        )
-        names.append(p["id"])
-
-    return rows, names, cfg["info"]
+def switch_view(_home_clicks, _sim_clicks):
+    return "home" if ctx.triggered_id == "btn-home" else "simulator"
 
 
 @app.callback(
-    Output("sim-graph", "figure"),
+    Output("home-page",      "style"),
+    Output("simulator-page", "style"),
+    Output("sim-controls",   "style"),
+    Output("btn-home", "color"),
+    Output("btn-home", "outline"),
+    Output("btn-sim",  "color"),
+    Output("btn-sim",  "outline"),
+    Input("view-store", "data"),
+)
+def apply_view(view):
+    if view == "home":
+        return (
+            _CONTENT_STYLE,
+            {"display": "none", **_CONTENT_STYLE},
+            {"display": "none"},
+            _VIEW_BTN_ACTIVE["color"],   _VIEW_BTN_ACTIVE["outline"],
+            _VIEW_BTN_INACTIVE["color"], _VIEW_BTN_INACTIVE["outline"],
+        )
+    return (
+        {"display": "none", **_CONTENT_STYLE},
+        _CONTENT_STYLE,
+        {},
+        _VIEW_BTN_INACTIVE["color"], _VIEW_BTN_INACTIVE["outline"],
+        _VIEW_BTN_ACTIVE["color"],   _VIEW_BTN_ACTIVE["outline"],
+    )
+
+
+@app.callback(
+    Output("params-container", "children"),
+    Output("param-names-store", "data"),
+    Output("info-blocks", "children"),
+    Input("equation-selector", "value"),
+)
+def update_controls(equation):
+    if not equation or equation.startswith("__group_"):
+        return [], [], []
+
+    cfg = EQUATIONS.get(equation)
+    if cfg is None:
+        return [], [], []
+
+    rows, names = [], []
+    for i, p in enumerate(cfg["params"]):
+        rows.append(
+            html.Div([
+                html.Label(p["label"], className="text-secondary mb-1",
+                           style={"fontSize": "0.82rem"}),
+                dbc.Input(
+                    id={"type": "param-input", "index": i},
+                    type="number",
+                    value=p["default"],
+                    min=p["min"],
+                    max=p["max"],
+                    step=p["step"],
+                    debounce=True,
+                    className="mb-2",
+                    style={"fontSize": "0.88rem"},
+                ),
+            ])
+        )
+        names.append(p["id"])
+
+    return rows, names, content.render_blocks(cfg["info"])
+
+
+@app.callback(
+    Output("sim-graph",  "figure"),
     Output("sim-status", "children"),
     Input("run-btn", "n_clicks"),
     State("equation-selector", "value"),
@@ -392,20 +449,19 @@ def update_controls(equation):
     prevent_initial_call=True,
 )
 def run_simulation(n_clicks, equation, param_values, param_names):
-    """Collect parameter values, run the selected simulation, and return the Plotly figure."""
     if not equation or equation.startswith("__group_"):
         raise dash.exceptions.PreventUpdate
 
-    # Build kwargs dict, replacing None with the default from the config
     cfg = EQUATIONS[equation]
-    params = {}
-    for name, val, p_def in zip(param_names or [], param_values or [], cfg["params"]):
-        params[name] = val if val is not None else p_def["default"]
+    params = {
+        name: (val if val is not None else p_def["default"])
+        for name, val, p_def in zip(param_names or [], param_values or [], cfg["params"])
+    }
 
     try:
         fig = cfg["run"](**params)
-        param_summary = "  |  ".join(f"{k} = {v}" for k, v in params.items())
-        return fig, f"Done — {param_summary}"
+        summary = "  |  ".join(f"{k} = {v}" for k, v in params.items())
+        return fig, f"Done — {summary}"
     except Exception as exc:
         err_fig = go.Figure()
         err_fig.update_layout(
