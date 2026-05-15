@@ -523,6 +523,12 @@ INFO_BURGERS_2D = [
             "σ — parámetro de estabilidad (recomendado usar valores pequeños)",
         ),
     ),
+    collapsible(
+        "Referencias",
+        bullets(
+             "Beck, M. (s.f.). Burgers Equation. Herit-Watt University. https://math.bu.edu/people/mabeck/Beck2012_burgers.pdf"
+        )
+    )
 ]
 
 INFO_CAVITY_FLOW = [
@@ -579,6 +585,14 @@ INFO_CAVITY_FLOW = [
             "dt — Tamaño de intervalos de tiempo que se consideran para ‘nt’",
         ),
     ),
+    collapsible(
+        "Referencias",
+        bullets(
+             "Sheposh, R. (2023). Navier-Stokes equation. EBSCO. https://www.ebsco.com/research-starters/mathematics/navier-stokes-equation",
+             "Zhang, J. Xiao, B. Yang, W. (2022, 17 de noviembre). Numerical Study of Lid-Driven Square Cavity Flow with Embedded Circular Obstacles Using Spectral/hp Element Methods. MDPI. https://www.mdpi.com/2076-3417/12/22/11711",
+             "Reusken, A. (2012, 06 de enero). Numerical Methods for the Navier-Stokes equations.  RWTH Aachen University. https://www.igpm.rwth-aachen.de/Download/ws1112/numanaIV/NavierStokes.pdf",
+        )
+    )
 ]
 
 INFO_CHANNEL_FLOW = [
