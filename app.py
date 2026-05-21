@@ -10,20 +10,20 @@ import content
 
 EQUATIONS = {
     "1d_diffusion": {
-        "label": "1D Diffusion Equation",
-        "group": "1D Equations",
+        "label": "Ecuacion de difusion en 1D",
+        "group": "Ecuaciones en 1D",
         "run": simulations.run_1d_diffusion,
         "params": [
             {"id": "nx",    "label": "Grid Points (nx)",     "default": 41,   "min": 10,    "max": 200,  "step": 1},
             {"id": "nt",    "label": "Time Steps (nt)",       "default": 20,   "min": 1,     "max": 500,  "step": 1},
-            {"id": "nu",    "label": "Diffusion Coeff. (ν)", "default": 0.3,  "min": 0.01,  "max": 2.0,  "step": 0.01},
+            {"id": "nu",    "label": "Coeficiente de difusion (ν)", "default": 0.3,  "min": 0.01,  "max": 2.0,  "step": 0.01},
             {"id": "sigma", "label": "CFL Number (σ)",        "default": 0.2,  "min": 0.01,  "max": 0.49, "step": 0.01},
         ],
         "info": content.INFO_1D_DIFFUSION,
     },
     "1d_linear_convection": {
-        "label": "1D Linear Convection",
-        "group": "1D Equations",
+        "label": "Conveccion lineal en 1D",
+        "group": "Ecuaciones en 1D",
         "run": simulations.run_1d_linear_convection,
         "params": [
             {"id": "nx",    "label": "Grid Points (nx)",  "default": 41,  "min": 10,   "max": 200,  "step": 1},
@@ -34,8 +34,8 @@ EQUATIONS = {
         "info": content.INFO_1D_LINEAR_CONVECTION,
     },
     "1d_nonlinear_convection": {
-        "label": "1D Nonlinear Convection",
-        "group": "1D Equations",
+        "label": "Conveccion no lineal en 1D",
+        "group": "Ecuaciones en 1D",
         "run": simulations.run_1d_nonlinear_convection,
         "params": [
             {"id": "nx", "label": "Grid Points (nx)", "default": 41,    "min": 10,    "max": 200, "step": 1},
@@ -45,8 +45,8 @@ EQUATIONS = {
         "info": content.INFO_1D_NONLINEAR_CONVECTION,
     },
     "burgers_1d": {
-        "label": "1D Burgers Equation",
-        "group": "1D Equations",
+        "label": "Ecuacion de Burgers en 1D",
+        "group": "Ecuaciones en 1D",
         "run": simulations.run_burgers_1d,
         "params": [
             {"id": "nx", "label": "Grid Points (nx)", "default": 101,  "min": 10,   "max": 201, "step": 1},
@@ -56,8 +56,8 @@ EQUATIONS = {
         "info": content.INFO_BURGERS_1D,
     },
     "2d_laplace": {
-        "label": "2D Laplace Equation",
-        "group": "2D Equations",
+        "label": "Ecuacion de Laplace en 2D",
+        "group": "Ecuaciones en 2D",
         "run": simulations.run_2d_laplace,
         "params": [
             {"id": "nx",            "label": "Grid Points X (nx)",    "default": 31,   "min": 10,   "max": 80,   "step": 1},
@@ -67,8 +67,8 @@ EQUATIONS = {
         "info": content.INFO_2D_LAPLACE,
     },
     "2d_poisson": {
-        "label": "2D Poisson Equation",
-        "group": "2D Equations",
+        "label": "Ecuacion de Poisson en 2D",
+        "group": "Ecuaciones en 2D",
         "run": simulations.run_2d_poisson,
         "params": [
             {"id": "nx", "label": "Grid Points X (nx)", "default": 50,  "min": 10, "max": 100, "step": 1},
@@ -78,8 +78,8 @@ EQUATIONS = {
         "info": content.INFO_2D_POISSON,
     },
     "2d_diffusion": {
-        "label": "2D Diffusion Equation",
-        "group": "2D Equations",
+        "label": "Ecuacion de difusion en 2D",
+        "group": "Ecuaciones en 2D",
         "run": simulations.run_2d_diffusion,
         "params": [
             {"id": "nx",    "label": "Grid Points X (nx)",   "default": 31,   "min": 10,    "max": 80,   "step": 1},
@@ -91,8 +91,8 @@ EQUATIONS = {
         "info": content.INFO_2D_DIFFUSION,
     },
     "2d_linear_convection": {
-        "label": "2D Linear Convection",
-        "group": "2D Equations",
+        "label": "Conveccion lineal en 2D",
+        "group": "Ecuaciones en 2D",
         "run": simulations.run_2d_linear_convection,
         "params": [
             {"id": "nx",    "label": "Grid Points X (nx)", "default": 81,  "min": 10,   "max": 150,  "step": 1},
@@ -104,8 +104,8 @@ EQUATIONS = {
         "info": content.INFO_2D_LINEAR_CONVECTION,
     },
     "2d_nonlinear_convection": {
-        "label": "2D Nonlinear Convection",
-        "group": "2D Equations",
+        "label": "Conveccion no lineal en 2D",
+        "group": "Ecuaciones en 2D",
         "run": simulations.run_2d_nonlinear_convection,
         "params": [
             {"id": "nx",    "label": "Grid Points X (nx)", "default": 101, "min": 10,   "max": 150,  "step": 1},
@@ -116,8 +116,8 @@ EQUATIONS = {
         "info": content.INFO_2D_NONLINEAR_CONVECTION,
     },
     "burgers_2d": {
-        "label": "2D Burgers Equation",
-        "group": "2D Equations",
+        "label": "Ecuacion de Burgers en 2D",
+        "group": "Ecuaciones en 2D",
         "run": simulations.run_burgers_2d,
         "params": [
             {"id": "nx",    "label": "Grid Points X (nx)", "default": 41,    "min": 10,     "max": 80,   "step": 1},
@@ -129,7 +129,7 @@ EQUATIONS = {
         "info": content.INFO_BURGERS_2D,
     },
     "cavity_flow": {
-        "label": "Cavity Flow (Navier-Stokes)",
+        "label": "Cavity Flow con Navier-Stokes",
         "group": "Navier-Stokes",
         "run": simulations.run_cavity_flow,
         "params": [
@@ -144,7 +144,7 @@ EQUATIONS = {
         "info": content.INFO_CAVITY_FLOW,
     },
     "channel_flow": {
-        "label": "Channel Flow (Navier-Stokes)",
+        "label": "Channel Flow con Navier-Stokes",
         "group": "Navier-Stokes",
         "run": simulations.run_channel_flow,
         "params": [
@@ -172,7 +172,7 @@ def _welcome_figure():
         xaxis=dict(visible=False),
         yaxis=dict(visible=False),
         annotations=[dict(
-            text="Select an equation and click  <b>Run Simulation</b>  to begin",
+            text="Selecciona una ecuacion y da click a <b>Run</b>  para empezar",
             xref="paper", yref="paper", x=0.5, y=0.5,
             showarrow=False,
             font=dict(size=18, color="#888"),
@@ -187,7 +187,7 @@ def _welcome_figure():
 app = dash.Dash(
     __name__,
     external_stylesheets=[dbc.themes.DARKLY],
-    title="CFD Equation Explorer",
+    title="CFD Grapher",
 )
 
 # Build grouped dropdown options
@@ -209,7 +209,7 @@ _VIEW_BTN_INACTIVE = {"color": "secondary", "outline": True}
 sidebar = html.Div(
     [
         html.Div(
-            html.H4("CFD Explorer", className="mb-0 fw-bold",
+            html.H4("CFD Grapher", className="mb-0 fw-bold",
                     style={"color": "#4fc3f7", "letterSpacing": "0.05em"}),
             className="mb-3",
         ),
@@ -217,10 +217,10 @@ sidebar = html.Div(
         # View toggle
         dbc.ButtonGroup(
             [
-                dbc.Button("Overview", id="btn-home", size="sm",
+                dbc.Button("General", id="btn-home", size="sm",
                            color=_VIEW_BTN_ACTIVE["color"],
                            outline=_VIEW_BTN_ACTIVE["outline"]),
-                dbc.Button("Simulator", id="btn-sim", size="sm",
+                dbc.Button("Simulador", id="btn-sim", size="sm",
                            color=_VIEW_BTN_INACTIVE["color"],
                            outline=_VIEW_BTN_INACTIVE["outline"]),
             ],
@@ -232,7 +232,7 @@ sidebar = html.Div(
             id="sim-controls",
             style={"display": "none"},
             children=[
-                html.Label("Equation",
+                html.Label("Ecuacion",
                            className="text-secondary small fw-bold text-uppercase mb-1"),
                 dcc.Dropdown(
                     id="equation-selector",
@@ -244,14 +244,14 @@ sidebar = html.Div(
 
                 html.Hr(style={"borderColor": "#444", "margin": "1.2rem 0"}),
 
-                html.Label("Parameters",
+                html.Label("Parametros",
                            className="text-secondary small fw-bold text-uppercase mb-2"),
                 html.Div(id="params-container"),
 
                 html.Hr(style={"borderColor": "#444", "margin": "1.2rem 0"}),
 
                 dbc.Button(
-                    [html.I(className="me-2"), "Run Simulation"],
+                    [html.I(className="me-2"), "Run"],
                     id="run-btn",
                     color="primary",
                     className="w-100",
@@ -283,11 +283,11 @@ home_page = html.Div(
     [
         html.Div(
             [
-                html.H2("Numerical Methods in CFD", className="fw-bold mb-1",
+                html.H2("Metodos numericos y Dinamica de fluidos computacionales", className="fw-bold mb-1",
                         style={"color": "#e0e0e0"}),
                 html.P(
-                    "An interactive explorer for finite difference methods in "
-                    "computational fluid dynamics.",
+                    "Explora los diversos metodos numericos con nuestro simulador " \
+                    "interactivo de fluidos computacionales",
                     className="text-secondary mb-0",
                     style={"fontSize": "0.95rem"},
                 ),
@@ -307,10 +307,10 @@ simulator_page = html.Div(
     [
         html.Div(
             [
-                html.H2("CFD Equation Explorer", className="fw-bold mb-1",
+                html.H2("CFD Grapher", className="fw-bold mb-1",
                         style={"color": "#e0e0e0"}),
                 html.P(
-                    "Select an equation, adjust its parameters, and run the simulation.",
+                    "Selecciona la ecuacion que desees, elige los parametros, y explora las graficas",
                     className="text-secondary mb-0",
                     style={"fontSize": "0.95rem"},
                 ),
@@ -319,7 +319,7 @@ simulator_page = html.Div(
         ),
 
         dcc.Loading(
-            id="loading-graph",
+            id="Cargando...",
             type="circle",
             color="#4fc3f7",
             children=dcc.Graph(
@@ -334,7 +334,7 @@ simulator_page = html.Div(
 
         html.Hr(style={"borderColor": "#2d2d4a", "margin": "1.5rem 0"}),
 
-        html.Label("About this Equation",
+        html.Label("Acerca de esta ecuacion",
                    className="text-secondary small fw-bold text-uppercase mb-2"),
         dbc.Card(
             dbc.CardBody(html.Div(id="info-blocks")),

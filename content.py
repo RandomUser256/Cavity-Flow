@@ -107,63 +107,57 @@ def render_blocks(blocks):
 
 HOME_CONTENT = [
     paragraph(
-        "This interactive tool explores the numerical methods used in Computational Fluid Dynamics (CFD). "
-        "Starting from simple 1D transport equations and building up to the full Navier-Stokes equations, "
-        "each simulation lets you adjust physical parameters and observe the results in real time."
+        "Nuestra aplicacion permite visualizar la dinamica de fluidos computacionales mediante graficas  con las cuales" \
+        "el usuario puede interactuar medainte los parametros. Presenta ecuaciones en 1D y 2D como tambien visuzalizacion de " \
+        "las ecuaciones de navier-strokes"
     ),
     collapsible(
-        "What is Computational Fluid Dynamics?",
+        "¿Que es la dinamica de Fluidos Computacional?",
         paragraph(
-            "CFD uses numerical algorithms to solve the governing equations of fluid motion. "
-            "Real-world flows rarely admit analytical solutions, so we discretize the equations "
-            "onto a mesh and solve the resulting algebraic system at each time step."
+            "La dinamica de fluidos computacional es la ciencia de usar computadoras para  anlizar y predecir los flujos de liquidos y gases" \
+            "mediante ecuaciones y analisis. Esta ciencia incorpora varios elementos de la fisica y esta presente en nuestra vida diaria desde" \
+            "la vibraciones de nuestra voz hasta el vuelo de un avion. Es por esto que resulta tan importante generar contenido que permita su " \
+            "mejor comprension al publico en general"
         ),
+    ),
+    collapsible(
+        "Historia de la dinamica de fluidos computacional",
+        paragraph(
+            "Al inicio del siglo 20, se empezaron a usar la ecuaciones de Navier-Strokes, estas ecuaciones son vitales y representan" \
+            "el inicio de la ciencia de la dinamica de fluidos computacionales al ofrecer los planos teoricos del comportamiento de los fluidos." \
+            "La aparicion de la primera computadoras en los años 50 y 60s fueron el punto de inflexion en esta ciencia, se empezaron a resolver " \
+            "problemas complejos, algunos incluso onsiderados imposibles de resolver en la epoca. Los metodos numericos ayudaron a los investigadores" \
+            "A dividir estos problemas en elementos y analizar las propiedades de los fluidos de manera mas sencilla. En la actualidad, la gran capacidad" \
+            "de poder de computo permite resolver problemas aun mas complejos en un menor tiempo, como analizar un avion en pleno vuelo "
+        ),
+    ),
+    collapsible(
+        "Aplicacione generales",
         bullets(
-            "Replace continuous derivatives with finite differences on a regular grid",
-            "March the solution forward in time (explicit) or solve a coupled system (implicit)",
-            "Visualize scalar fields (pressure, temperature) and vector fields (velocity)",
+            "Desarrollo aeroespacial y defensa: Modelado del flujo del viento alrededor de un avion para predecir el impulso",
+            "Industria Automotriz: Prediccion de que tan eficiente es el enfirado del motor, ajuste de sensores, acustica, modelado de la bateria, etc",
+            "Energias renovables: Medicion de la eficiencia del hidrogeno con respecto a otros combustibles, analisis de almacenamiento de energia y de consumo energetico",
+            "Salud: Analisis del flujo de la sangre y el oxigeno en la sangre, medicionde eficiencia de nuevos medicamentos",
+            "Marina: Propulsion naval, resistencia del casco de un barco y simulacion de la interaccion de las olas con la nave",
         ),
     ),
     collapsible(
-        "Finite Difference Method (FDM)",
-        paragraph(
-            "All solvers here use the Finite Difference Method: derivatives are approximated "
-            "using the values at neighboring grid points."
-        ),
-        paragraph("First-order backward difference (upwind for convection):"),
-        latex(r"\frac{\partial u}{\partial x} \approx \frac{u_i - u_{i-1}}{\Delta x}"),
-        paragraph("Second-order centered difference for the Laplacian:"),
-        latex(r"\frac{\partial^2 u}{\partial x^2} \approx \frac{u_{i+1} - 2u_i + u_{i-1}}{\Delta x^2}"),
-    ),
-    collapsible(
-        "Numerical Stability — CFL Condition",
-        paragraph(
-            "Explicit time-stepping imposes a maximum allowable time step to remain stable. "
-            "The Courant-Friedrichs-Lewy (CFL) condition for convection problems:"
-        ),
-        latex(r"\sigma = \frac{c \,\Delta t}{\Delta x} \leq 1"),
-        paragraph("For diffusion the stability constraint is:"),
-        latex(r"\nu \frac{\Delta t}{\Delta x^2} \leq \frac{1}{2}"),
-        paragraph("Exceeding these limits causes the numerical solution to grow without bound."),
-    ),
-    collapsible(
-        "Equation Progression",
-        paragraph("Equations are ordered from simple to complex:"),
+        "Tipos de ecuaciones",
+        paragraph("Las ecuaciones estan organizadas por orden de complejidad:"),
         bullets(
-            "1D Linear Convection — constant-speed transport of a wave profile",
-            "1D Nonlinear Convection — self-steepening due to velocity-dependent wave speed",
-            "1D Diffusion — heat-equation spreading with finite viscosity",
-            "1D Burgers — combines nonlinear convection and diffusion",
-            "2D Laplace / Poisson — steady-state elliptic problems",
-            "2D extensions of diffusion and convection",
-            "Navier-Stokes: lid-driven Cavity Flow and pressure-driven Channel Flow",
+            "Conveccion lineal en 1D ",
+            "Conveccion no lineal en 1D",
+            "Ecuacion de difusion en 1D",
+            "Ecuacion de Burgers en 1D",
+            "Laplace y Poisson en 2D",
+            "Ecuaciones de conveccion y difusion en 2D",
+            "Ecuaciones de Navier Strokes: Cavity flow y Channel flow",
         ),
     ),
     collapsible(
-        "Navier-Stokes Equations",
+        "Ecuaciones de Navier-Strokes",
         paragraph(
-            "The incompressible Navier-Stokes equations govern real viscous fluid flows. "
-            "They express conservation of momentum and mass:"
+            "Esta es la segunda ley de Newton aplicada al fluido: Fuerza es igual a masa por aceleracion."
         ),
         latex(
             r"\frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot \nabla)\mathbf{u} "
@@ -171,8 +165,16 @@ HOME_CONTENT = [
         ),
         latex(r"\nabla \cdot \mathbf{u} = 0"),
         paragraph(
-            "Pressure is determined implicitly through a Poisson equation derived from the "
-            "incompressibility constraint, solved iteratively at every time step."
+            "Lo que hace a estas ecuaciones complejas es que es no lineal, y es por esto que la dinamica de fluidos computacional requieren la " \
+            "aplicacion itertiva de metodos numericos."
+        ),
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+            "Ansys.(s.f.).What is Computational Fluid Dynamics (CFD)?.Simulation Topics.https://www.ansys.com/simulation-topics/what-is-computational-fluid-dynamics",
+            "ptc.(s.f.).Computational Fluid Dynamics.CAD software solutions. https://www.ptc.com/en/technologies/cad/simulation-and-analysis/computational-fluid-dynamics ",
+            "Volupe.(s.f.). Basic CFD Concepts — A Practical Introduction to Computational Fluid Dynamics. https://volupe.com/support/basic-cfd-concepts-fluid-dynamics/",
         ),
     ),
 ]
@@ -182,96 +184,125 @@ HOME_CONTENT = [
 
 INFO_1D_DIFFUSION = [
     paragraph(
-        "The 1D diffusion equation (heat equation) models how a scalar quantity — "
-        "temperature, concentration, or vorticity — spreads through a medium due to molecular diffusion."
+        "También conocida como la ecuación de calor, describe la difusión, " \
+        "que es la distribución de las partículas en un sistema determinado, " \
+        "donde hay regiones con mayor concentración que otras."
     ),
     latex(r"\frac{\partial u}{\partial t} = \nu \frac{\partial^2 u}{\partial x^2}"),
     collapsible(
-        "Finite Difference Scheme",
-        paragraph("Forward-Time, Centered-Space (FTCS) discretization:"),
-        latex(
-            r"u_i^{n+1} = u_i^n + \nu \frac{\Delta t}{\Delta x^2}"
-            r"\left(u_{i+1}^n - 2u_i^n + u_{i-1}^n\right)"
-        ),
-        paragraph("First-order in time, second-order in space."),
+        "¿Como se relaciona con CFD?",
+        paragraph("Representa el término viscoso de las ecuaciones de fluidos. " \
+        "En CFD, sirve para probar esquemas numéricos implícitos y explícitos de disipación."),
     ),
     collapsible(
-        "Stability",
-        paragraph("FTCS is conditionally stable; the requirement is:"),
-        latex(r"\nu \frac{\Delta t}{\Delta x^2} \leq \frac{1}{2}"),
-        paragraph("The CFL parameter σ directly controls this ratio — keep it ≤ 0.49."),
-    ),
-    collapsible(
-        "Parameters",
+        "Variables",
         bullets(
-            "nx — spatial grid resolution (more points → smoother solution)",
-            "nt — number of time steps (higher → further evolved in time)",
-            "ν — diffusion coefficient (larger → faster spreading)",
-            "σ — stability parameter; must stay ≤ 0.49",
+            "nx —  nodos en X",
+            "nt — intervalos",
+            "ν — Coeficiente de difusion",
+            "σ — CFL ≤ 0.49",
+        ),
+    ),
+    collapsible(
+        "Aplicaciones",
+        bullets(
+            "Un ejemplo de sus aplicaciones es predecir la dispersión de los " \
+            "contaminantes en un lago a lo largo del tiempo ",
+        ),
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+            "Study smarter. (2024, 10 de Junio). Difusion. " \
+            "https://www.studysmarter.es/resumenes/ingenieria/termodinamica-de-ingenieria/ecuacion-de-difusion/",
         ),
     ),
 ]
 
 INFO_1D_LINEAR_CONVECTION = [
     paragraph(
-        "The 1D linear convection equation describes the transport of a wave profile at a "
-        "constant speed c without change in shape (in the continuous, exact case)."
+        "Muestra la transferencia del calor a través de un fluido," \
+        "este viaja a través del movimiento de la masa de dicho fluido"
     ),
     latex(r"\frac{\partial u}{\partial t} + c \frac{\partial u}{\partial x} = 0"),
     collapsible(
-        "Finite Difference Scheme",
-        paragraph("First-order upwind (backward in space, forward in time):"),
-        latex(r"u_i^{n+1} = u_i^n - c \frac{\Delta t}{\Delta x}\left(u_i^n - u_{i-1}^n\right)"),
+        "¿Como se relaciona con CFD?",
         paragraph(
-            "The backward difference is chosen in the direction of wave propagation "
-            "to ensure numerical stability."
+            "Es la base para entender cómo viaja la información en una malla computacional." \
+            "Ayuda a estudiar el número de Courant (CFL) y la estabilidad numérica."
         ),
     ),
     collapsible(
-        "Stability — CFL Condition",
-        paragraph("The scheme is stable when:"),
-        latex(r"\sigma = \frac{c \,\Delta t}{\Delta x} \leq 1"),
-        paragraph("At σ = 1 the upwind scheme is exact (zero numerical diffusion)."),
+        "Variables",
+        bullets(
+            "nx — nodos en X",
+            "nt — intervalos",
+            "c — Velocidad de propagacion de la onda",
+            "σ — CFL ≤ 1 ",
+        ),
     ),
     collapsible(
-        "Parameters",
+        "Aplicaciones",
         bullets(
-            "nx — number of spatial grid points",
-            "nt — number of time steps",
-            "c — wave propagation speed",
-            "σ — CFL number; must be ≤ 1 for stability",
+            "Las empresas de gas o petróleo inyectan un químico rastreador en una tubería. " \
+            "Usan esta ecuación en un modelo de una sola dimensión (la línea del tubo) para calcular cuánto tiempo tardará el químico en " \
+            "llegar a los sensores río abajo y detectar si hubo una pérdida de presión o fuga en el trayecto.",
+        ),
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+            "Study smarter. (2024, 12 de Junio). Convección." \
+            "https://www.studysmarter.es/resumenes/ingenieria/termodinamica-de-ingenieria/conveccion/",
         ),
     ),
 ]
 
 INFO_1D_NONLINEAR_CONVECTION = [
     paragraph(
-        "The nonlinear convection equation is like the linear case but the wave speed equals the "
-        "solution itself. Faster parts of the wave overtake slower parts, steepening the profile "
-        "into a shock."
+        "A diferencia de la convección lineal, la velocidad del fluido no es una constante externa, " \
+        "está acoplada al movimiento, " \
+        "lo que genera que la velocidad de propagación cambia con el flujo"
     ),
     latex(r"\frac{\partial u}{\partial t} + u \frac{\partial u}{\partial x} = 0"),
     collapsible(
-        "Finite Difference Scheme",
-        paragraph("First-order upwind discretization with velocity-dependent speed:"),
-        latex(
-            r"u_i^{n+1} = u_i^n - u_i^n \frac{\Delta t}{\Delta x}"
-            r"\left(u_i^n - u_{i-1}^n\right)"
+        "¿Como se relaciona con CFD?",
+        paragraph("Este término no lineal es el causante de la turbulencia y el caos en los fluidos. " \
+        "Es el problema matematico mas complejo de Navier-Stokes ya que introduce fenómenos " \
+        "de choque donde zonas rápidas alcanzan a las lentas."),
+    ),
+    collapsible(
+        "Variables",
+        bullets(
+            "nx — nodos en X",
+            "nt — intervalos",
+            "c — velocidad de propagacion de la onda",
+            "σ — CFL ≤ 1",
         ),
     ),
     collapsible(
-        "Parameters",
+        "Aplicaciones",
+        paragraph(
+            "Aunque nació para fluidos, se usa formalmente en ingeniería civil para diseñar el flujo de tráfico " \
+            "en túneles o puentes de un solo carril. " \
+            "Permite predecir en qué punto exacto un frenado ligero causará un embotellamiento masivo kilómetros atrás",
+        ),
+    ),
+    collapsible(
+        "Referencias",
         bullets(
-            "nx — number of spatial grid points",
-            "nt — number of time steps",
-            "dt — time step size Δt; keep small to avoid instability",
+            "Study smarter. (2024, 12 de Junio). Convección." \
+            "https://www.studysmarter.es/resumenes/ingenieria/termodinamica-de-ingenieria/conveccion/",
         ),
     ),
 ]
 
+#Auditar esto con Max 
+
 INFO_BURGERS_1D = [
     paragraph(
-        "Modelo de movimiento turbulento de fluidos propuesto por J.M Burgers, siendo publicados todos sus artículos respecto al modelo en 1948 (Beck, 1948). "
+        "Modelo de movimiento turbulento de fluidos propuesto por J.M Burgers, " \
+        "siendo publicados todos sus artículos respecto al modelo en 1948 (Beck, 1948). "
         "La ecuación de Burgers combina la convección no lineal con la difusión viscosa."
     ),
     collapsible(
@@ -316,147 +347,167 @@ INFO_BURGERS_1D = [
 
 INFO_2D_LAPLACE = [
     paragraph(
-        "The 2D Laplace equation governs steady-state diffusion: temperature at equilibrium, "
-        "electrostatic potential in free space, or the velocity potential of inviscid irrotational flow."
+        "La ecuacion de Laplace permite modelar flujos potenciales en campos de velocidad sin circulación."
     ),
     latex(r"\frac{\partial^2 p}{\partial x^2} + \frac{\partial^2 p}{\partial y^2} = 0"),
     collapsible(
-        "Iterative Solver",
+        "¿Como se relaciona con CFD?",
         paragraph(
-            "With no time dependence, the equation is solved by repeated Jacobi iteration "
-            "until the L1 norm of successive differences falls below the tolerance:"
-        ),
-        latex(
-            r"p_{i,j} = \frac{(p_{i+1,j} + p_{i-1,j})\Delta y^2 "
-            r"+ (p_{i,j+1} + p_{i,j-1})\Delta x^2}{2(\Delta x^2 + \Delta y^2)}"
+            "Es la parte mas importante del flujo Potencial (fluidos ideales, no viscosos e irrotacionales)." \
+            "Permite calcular campos de velocidad complejos de manera rapida usando funciones de corriente antes de meterse con simulaciones complejas."
         ),
     ),
     collapsible(
-        "Boundary Conditions",
+        "Variables",
         bullets(
-            "p = 0 on the top and bottom edges",
-            "p = y on the right edge (linear gradient)",
-            "∂p/∂x = 0 on the left edge (zero-flux Neumann condition)",
+            "nx — cuadriculas en x",
+            "ny — cuadriculas en y",
+            "Tolerancia de convergencia — Umbral para detener la iteracion",
         ),
     ),
     collapsible(
-        "Parameters",
+        "Aplicaciones",
         bullets(
-            "nx — grid points in x",
-            "ny — grid points in y",
-            "Convergence Tolerance — L1-norm threshold for stopping iteration",
+            "Este modelo es útil para estudiar flujos laminares alrededor de objetos sumergidos," \
+            "como al diseñar cascos de barcos, donde se busca minimizar la resistencia al fluido",
+        ),
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+            "Study smarter. (2024, 5 de septiembre). Ecuaciones de Laplace.  " \
+            "https://www.studysmarter.es/resumenes/ingenieria/ingenieria-quimica/ecuaciones-de-laplace/",
         ),
     ),
 ]
 
 INFO_2D_POISSON = [
     paragraph(
-        "The Poisson equation is the Laplace equation with a non-zero source term. "
-        "It appears in electrostatics, heat conduction with sources, and as the "
-        "pressure equation in incompressible flow solvers."
+        "La Ecuación de Poisson en física es fundamental," \
+        "ya que relaciona la densidad de carga de un sistema con el campo de potencial que genera"
     ),
     latex(r"\frac{\partial^2 p}{\partial x^2} + \frac{\partial^2 p}{\partial y^2} = b(x,y)"),
     collapsible(
-        "Source Term",
+        "¿Como se relaciona con CFD?",
         paragraph(
-            "The source term b is two point sources of equal and opposite strength "
-            "placed symmetrically inside the domain:"
-        ),
-        latex(
-            r"b_{i,j} = \begin{cases}"
-            r"+100 & \text{near } (x, y) = (0.25L_x,\, 0.25L_y) \\"
-            r"-100 & \text{near } (x, y) = (0.75L_x,\, 0.75L_y)"
-            r"\end{cases}"
+            "Es crucial para resolver fluidos incompresibles, como el agua o el aire a baja velocidad. " \
+            "En algoritmos clásicos de CFD la presión no tiene una ecuación directa, " \
+            "así que se construye una Ecuación de Poisson para la Presión. En cada paso de tiempo, " \
+            "se resuelve esta ecuación para asegurar que el campo de velocidades respete la conservación de la masa"
         ),
     ),
     collapsible(
-        "Finite Difference Scheme",
-        paragraph("Iterative update at each interior grid point:"),
-        latex(
-            r"p_{i,j}^{n+1} = \frac{(p_{i+1,j}^n + p_{i-1,j}^n)\Delta y^2 "
-            r"+ (p_{i,j+1}^n + p_{i,j-1}^n)\Delta x^2 - b_{i,j}\Delta x^2\Delta y^2}"
-            r"{2(\Delta x^2 + \Delta y^2)}"
-        ),
-    ),
-    collapsible(
-        "Parameters",
+        "Variables",
         bullets(
-            "nx — grid points in x",
-            "ny — grid points in y",
-            "nt — iteration count (more → closer to converged solution)",
+            "nx — cuadriculas en x",
+            "ny — cuadriculas en y",
+            "nt — contador de iteraciones",
+        ),
+    ),
+    collapsible(
+        "Aplicaciones",
+        paragraph(
+            "En un simulador de CFD, cuando el agua pasa a través de las apsas de una bomba, la velocidad del fluido cambia constantemente. " \
+            "La ecuación de Poisson se usa para calcular el mapa de presiones dentro de la bomba. Si la presión baja demasiado en una zona, esto" \
+            "evita que el agua puede hervir de golpe y destruir el metal de la bomba",
+        ),
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+            "Study smarter. (2024, 20 de junio). Ecuacion de Poisson. " \
+            "https://www.studysmarter.es/resumenes/fisica/electromagnetismo/ecuacion-de-poisson/ ",
         ),
     ),
 ]
 
 INFO_2D_DIFFUSION = [
     paragraph(
-        "The 2D diffusion equation extends the 1D heat equation to two spatial dimensions. "
-        "An initial square pulse spreads radially outward over time."
+        "También conocida como la ecuación de calor, describe la difusión," \
+        " que es la distribución de las partículas en un sistema determinado," \
+        " donde hay regiones con mayor concentración que otras. "
     ),
     latex(
         r"\frac{\partial u}{\partial t} = \nu \left("
         r"\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}\right)"
     ),
     collapsible(
-        "Finite Difference Scheme",
-        paragraph("Explicit FTCS extended to 2D:"),
-        latex(
-            r"u_{i,j}^{n+1} = u_{i,j}^n + \nu\Delta t\left("
-            r"\frac{u_{i+1,j} - 2u_{i,j} + u_{i-1,j}}{\Delta x^2} + "
-            r"\frac{u_{i,j+1} - 2u_{i,j} + u_{i,j-1}}{\Delta y^2}\right)"
-        ),
+        "¿Como se relaciona con CFD?",
+        paragraph("Representa el término viscoso de las ecuaciones de fluidos. " \
+        "En CFD, sirve para probar esquemas numéricos implícitos y explícitos de disipación."),
     ),
     collapsible(
-        "Stability",
-        paragraph("The 2D stability condition is:"),
-        latex(
-            r"\nu\Delta t\left(\frac{1}{\Delta x^2} + \frac{1}{\Delta y^2}\right) \leq \frac{1}{2}"
-        ),
-    ),
-    collapsible(
-        "Parameters",
+        "Variables",
         bullets(
-            "nx, ny — grid dimensions",
-            "nt — time steps",
-            "ν — diffusion coefficient",
-            "σ — CFL-like stability parameter; keep ≤ 0.49",
+            "nx — nodos en x",
+            "ny — nodos en y",
+            "nt — Intervalos",
+            "ν - Coeficciente de difusion",
+            "σ - CFL",
+        ),
+    ),
+    collapsible(
+        "Aplicaciones",
+        paragraph(
+            "Los ingenieros de hardware  usan esta ecuación en un plano 2D para ver cómo el calor" \
+            "generado por los transistores se esparce por la placa de circuito, " \
+            "permitiendo determinar donde posicionar los ventiladores o disipadores de calor.",
+        ),
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+            "Study smarter. (2024, 10 de Junio). Difusion. " \
+            "https://www.studysmarter.es/resumenes/ingenieria/termodinamica-de-ingenieria/ecuacion-de-difusion/",
         ),
     ),
 ]
 
 INFO_2D_LINEAR_CONVECTION = [
     paragraph(
-        "The 2D linear convection equation transports a scalar field at constant velocity (c, c) "
-        "in both the x and y directions simultaneously."
+        "Muestra la transferencia del calor a través de un fluido, este viaja a través del movimiento de la masa de dicho fluido"
     ),
     latex(
         r"\frac{\partial u}{\partial t} "
         r"+ c\frac{\partial u}{\partial x} + c\frac{\partial u}{\partial y} = 0"
     ),
     collapsible(
-        "Finite Difference Scheme",
-        paragraph("First-order upwind in both spatial directions:"),
-        latex(
-            r"u_{i,j}^{n+1} = u_{i,j}^n "
-            r"- c\frac{\Delta t}{\Delta x}(u_{i,j}^n - u_{i-1,j}^n) "
-            r"- c\frac{\Delta t}{\Delta y}(u_{i,j}^n - u_{i,j-1}^n)"
+        "¿Como se relaciona con CFD?",
+        paragraph(
+            "Es la base para entender cómo viaja la información en una malla computacional." \
+            "Ayuda a estudiar el número de Courant (CFL) y la estabilidad numérica."
         ),
     ),
     collapsible(
-        "Parameters",
+        "Variables",
         bullets(
-            "nx, ny — grid dimensions",
-            "nt — time steps",
-            "c — wave speed in both directions",
-            "σ — CFL number; must be ≤ 1",
+            "nx, ny — nodos en X y Y",
+            "nt — intervalos",
+            "c — Velocidad de onda en ambas direcciones",
+            "σ — CFL ≤ 1",
+        ),
+    ),
+    collapsible(
+        "Aplicaciones",
+        bullets(
+            "Cuando un volcán hace erupción, los meteorólogos usan esta ecuación en un mapa 2D " \
+            "para predecir hacia dónde se moverá la nube de ceniza en las próximas horas basándose en la velocidad del viento, " \
+            "permitiendo cerrar aeropuertos a tiempo.",
+        ),
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+            "Study smarter. (2024, 12 de Junio). Convección." \
+            "https://www.studysmarter.es/resumenes/ingenieria/termodinamica-de-ingenieria/conveccion/",
         ),
     ),
 ]
 
 INFO_2D_NONLINEAR_CONVECTION = [
     paragraph(
-        "The 2D nonlinear convection equation extends the 1D case to two velocity components "
-        "u and v that each advect themselves and are coupled through the other."
+        "A diferencia de la convección lineal, la velocidad del fluido no es una constante externa, " \
+        "está acoplada al movimiento, lo que genera que la velocidad de propagación cambia con el flujo ."
     ),
     latex(
         r"\frac{\partial u}{\partial t} "
@@ -467,18 +518,32 @@ INFO_2D_NONLINEAR_CONVECTION = [
         r"+ u\frac{\partial v}{\partial x} + v\frac{\partial v}{\partial y} = 0"
     ),
     collapsible(
-        "Visualization",
-        paragraph(
-            "Output shows the u and v components as side-by-side surface plots, "
-            "so you can compare how steepening develops differently in each direction."
+        "¿Como se relaciona con CFD?",
+        paragraph("Este término no lineal es el causante de la turbulencia y el caos en los fluidos. " \
+        "Es el problema matematico mas complejo de Navier-Stokes ya que introduce fenómenos " \
+        "de choque donde zonas rápidas alcanzan a las lentas."),
+    ),
+    collapsible(
+        "Variables",
+        bullets(
+            "nx, ny — nodos en X y Y",
+            "nt — intervalos",
+            "σ — CFL number",
         ),
     ),
     collapsible(
-        "Parameters",
+        "Aplicaciones",
+        paragraph(
+            "En las primeras etapas de diseño de un dron, se usa para calcular cómo el aire " \
+            "de alta velocidad que pasa por encima del dron choca e interactúa con el aire de baja velocidad del entorno," \
+            " antes de que la fricción del aire empiece a importar."
+        ),
+    ),
+    collapsible(
+        "Referencias",
         bullets(
-            "nx, ny — grid dimensions",
-            "nt — time steps",
-            "σ — CFL number",
+            "Study smarter. (2024, 12 de Junio). Convección." \
+            "https://www.studysmarter.es/resumenes/ingenieria/termodinamica-de-ingenieria/conveccion/",
         ),
     ),
 ]
@@ -521,6 +586,15 @@ INFO_BURGERS_2D = [
             "nt - Cantidad de unidades de tiempo consideradas en el desplazamiento de la ecuación",
             "ν (viscosidad cinemática) - Esta controla la fuerza de dispersión de la ecuación",
             "σ — parámetro de estabilidad (recomendado usar valores pequeños)",
+        ),
+    ),
+    collapsible(
+        "Aplicaciones",
+        paragraph(
+            "Se usa para la ruptura de olas en ingeniería naval como tambien diseñar puertos, muelles o rompeolas. " \
+            "El software calcula cómo las olas del mar avanzan (convección) " \
+            "y cómo la fricción con el fondo marino o los bloques de concreto (difusión) las frena, " \
+            "prediciendo la fuerza con la que golpearán la estructura."
         ),
     ),
     collapsible(
@@ -586,6 +660,14 @@ INFO_CAVITY_FLOW = [
         ),
     ),
     collapsible(
+        "Aplicaciones",
+        bullets(
+            "Diseño de tanques de mezclado industrial",
+            "Diseño de sistemas de enfiramento electrico",
+            "Anlizar como circula el aire dentro de una habitacion con una ventana abierta para la renovacion de aire",
+        ),
+    ),
+    collapsible(
         "Referencias",
         bullets(
              "Sheposh, R. (2023). Navier-Stokes equation. EBSCO. https://www.ebsco.com/research-starters/mathematics/navier-stokes-equation",
@@ -597,9 +679,10 @@ INFO_CAVITY_FLOW = [
 
 INFO_CHANNEL_FLOW = [
     paragraph(
-        "Channel flow simulates incompressible flow between two parallel plates driven by a "
-        "constant body force (analogous to a pressure gradient). Periodic boundary conditions "
-        "are applied in x. The steady-state solution is the parabolic Poiseuille profile."
+        "Simula el movimiento de un fluido situado en un canal donde: " \
+        "el fluido está en contacto con la atmósfera, su cantidad se mantiene constante en cualquier área dada del canal y " \
+        "es propulsado principalmente por gravedad y no por presión. (Dias et al., 2016, p.1). " \
+        "Lo anterior se resuelve por medio de la proyección de Choring, mostrando la turbulencia presente a lo largo del canal."
     ),
     collapsible(
         "Governing Equations",
@@ -619,15 +702,31 @@ INFO_CHANNEL_FLOW = [
         ),
     ),
     collapsible(
-        "Parameters",
+        "Parametros",
         bullets(
-            "nx, ny — grid dimensions",
-            "nit — pressure Poisson iterations per time step",
-            "ρ — density",
-            "ν — kinematic viscosity",
-            "F — body force magnitude (drives the flow)",
-            "dt — time step size",
-            "Max Iterations — maximum time steps before stopping",
+            "nx, ny — nodos en X y Y ",
+            "nit — presion de Poisson por intervalo",
+            "ρ — densidad",
+            "ν — viscocidad cinematica",
+            "F — magnitud de fuerza del cuerpo",
+            "dt — intervalo",
+            "Max Iterations — numero maximo de intervalo antes de parar",
         ),
     ),
+    collapsible(
+        "Aplicaciones",
+        bullets(
+            "Cuando se diseñan ductos de aire en un edificio, los ingenieros usan simulaciones de channel flow para asegurarse de contar con la energia exacta para que el aire llege a todas las oficinas",
+            "Calcular el costo de bombeo de un gasoducto dependiendo de la viscocidad",
+            "Uso en dispositivos cardiovasculares para evitar la mezcla de liquidos con la sangre",
+        ),
+    ),
+    collapsible(
+        "Referencias",
+        bullets(
+             "Sheposh, R. (2023). Navier-Stokes equation. EBSCO. https://www.ebsco.com/research-starters/mathematics/navier-stokes-equation",
+             "Zhang, J. Xiao, B. Yang, W. (2022, 17 de noviembre). Numerical Study of Lid-Driven Square Cavity Flow with Embedded Circular Obstacles Using Spectral/hp Element Methods. MDPI. https://www.mdpi.com/2076-3417/12/22/11711",
+             "Reusken, A. (2012, 06 de enero). Numerical Methods for the Navier-Stokes equations.  RWTH Aachen University. https://www.igpm.rwth-aachen.de/Download/ws1112/numanaIV/NavierStokes.pdf",
+        )
+    )
 ]
